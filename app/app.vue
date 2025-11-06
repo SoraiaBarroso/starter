@@ -1,4 +1,6 @@
-<script setup>
+<script setup lang="ts">
+import type { NavigationMenuItem } from '@nuxt/ui'
+
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -23,30 +25,46 @@ useSeoMeta({
   twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
   twitterCard: 'summary_large_image'
 })
+
+const items = computed<NavigationMenuItem[]>(() => [{
+  label: 'Waitlist',
+  to: '#waitlist',
+}, {
+  label: 'Features',
+  to: '#features',
+},
+{
+  label: 'Pricing',
+  to: '#pricing',
+}])
 </script>
 
 <template>
   <UApp>
-    <UHeader>
-      <template #left>
-        <NuxtLink to="/">
-          <AppLogo class="w-auto h-6 shrink-0" />
-        </NuxtLink>
-
-        <TemplateMenu />
-      </template>
+    <UHeader title="MiroMiro" to="/" mode="drawer">
+      <UNavigationMenu :items="items" />
 
       <template #right>
         <UColorModeButton />
 
         <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
+          to="/signin"
+          label="Sign In"
+          aria-label="Sign In"
           color="neutral"
-          variant="ghost"
+          variant="outline"
         />
+        <UButton
+          to="/signup"
+          label="Sign Up"
+          aria-label="Sign Up"
+          color="neutral"
+          trailing-icon="i-lucide-arrow-right"
+        />
+      </template>
+
+      <template #body>
+        <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5" />
       </template>
     </UHeader>
 

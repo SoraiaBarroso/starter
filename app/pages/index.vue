@@ -1,26 +1,176 @@
+<script setup lang="ts">
+import * as z from 'zod'
+import type { FormSubmitEvent } from '@nuxt/ui'
+
+const schema = z.object({
+  email: z.string().email('Invalid email')
+})
+
+type Schema = z.output<typeof schema>
+
+const state = reactive<Partial<Schema>>({
+  email: undefined
+})
+
+const toast = useToast()
+const isSubmitting = ref(false)
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  if (isSubmitting.value) return
+
+  isSubmitting.value = true
+
+  try {
+    const response = await $fetch('/api/waitlist', {
+      method: 'POST',
+      body: {
+        email: event.data.email
+      }
+    })
+
+    toast.add({
+      title: 'Success!',
+      description: 'You\'ve been added to the waitlist. Check your email!',
+      color: 'success'
+    })
+
+    // Reset the form
+    state.email = undefined
+  } catch (error: any) {
+    toast.add({
+      title: 'Error',
+      description: error.data?.message || 'Failed to join waitlist. Please try again.',
+      color: 'error'
+    })
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const plans = ref([
+  {
+    title: 'Free',
+    description: 'Tailored for indie hackers.',
+    price: '$0',
+    features: [
+      'One developer',
+      'Lifetime access'
+    ],
+    button: {
+      label: 'Buy now'
+    }
+  },
+  {
+    title: 'Premium',
+    description: 'Best suited for small teams.',
+    price: '$3.99/mo',
+    features: [
+      'Up to 5 developers',
+      'Everything in Solo'
+    ],
+    button: {
+      label: 'Buy now'
+    }
+  },
+])
+</script>
+
 <template>
   <div>
     <UPageHero
-      title="Nuxt Starter Template"
-      description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
+      title="Extract Assets from Any Website in Seconds"
+      description="The ultimate Chrome extension for designers and developers. Capture colors, typography, assets, and generate complete design systems instantly."
+      :ui="{
+        container: 'bg-[/assets/bg.jpg]',
+        root: 'bg-[/assets/bg.jpg]',
+      }"
       :links="[{
-        label: 'Get started',
-        to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-        target: '_blank',
+        label: 'Join the Waitlist',
+        to: '#waitlist',
         trailingIcon: 'i-lucide-arrow-right',
-        size: 'xl'
+        size: 'xl',
+        variant: 'soft',
+        class: 'rounded-full'
       }, {
-        label: 'Use this template',
-        to: 'https://github.com/nuxt-ui-templates/starter',
-        target: '_blank',
-        icon: 'i-simple-icons-github',
+        label: 'See how It Works',
+        to: '#features',
         size: 'xl',
         color: 'neutral',
-        variant: 'subtle'
+        variant: 'soft',
+        class: 'rounded-full'
       }]"
     />
+    
+    <UPageCTA
+      id="waitlist"
+      title="Be First to Know"
+      description="Join our waitlist and have the chance to get premium features."
+      variant="subtle"
+      :ui="{
+        container: 'flex flex-col items-center justify-center !gap-8',
+      }"
+    >
+      <UForm :schema="schema" :state="state" class="space-y-4 w-xs" @submit="onSubmit">
+        <UFormField  name="email" class="w-full">
+          <UInput placeholder="name@mail.com" v-model="state.email" class="w-full" />
+        </UFormField>
+        <UButton type="submit" class="w-full flex justify-center items-center" :disabled="!state.email || isSubmitting" :loading="isSubmitting">
+          Join Waitlist
+        </UButton>
+      </UForm>
+    </UPageCTA>
+   
+    <UPageSection
+      title="Overview"
+      description="Automaticly extracts infomraiton when you ennter a website"
+      orientation="horizontal"
+      :ui="{
+        container: '!pb-8'
+      }"
+    >
+      <img
+        src="assets/dashboard.png"
+        width="352"
+        alt="Illustration"
+        class="w-full rounded-lg"
+      />
+    </UPageSection>
 
     <UPageSection
+      title="Overview"
+      description="Automaticly extracts infomraiton when you ennter a website"
+      orientation="horizontal"
+      :ui="{
+        container: '!pb-8'
+      }"
+      reverse
+    >
+      <img
+        src="assets/feature1.png"
+        width="352"
+        alt="Illustration"
+        class="w-full rounded-lg"
+      />
+    </UPageSection>
+
+     <UPageSection
+      title="Overview"
+      description="Automaticly extracts infomraiton when you ennter a website"
+      orientation="horizontal"
+    >
+      <img
+        src="assets/dashboard.png"
+        width="352"
+        alt="Illustration"
+        class="w-full rounded-lg"
+      />
+    </UPageSection>
+
+    <UPageSection id="pricing" title="Pricing" description="Choose the plan that fits your needs. Upgrade, downgrade, or cancel anytime with no hidden fees. Simple, transparent pricing for everyone.">
+          <UPricingPlans :plans="plans"/>
+    </UPageSection>
+
+    <!-- <UPageSection
       id="features"
       title="Everything you need to build modern Nuxt apps"
       description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
@@ -49,28 +199,6 @@
         title: 'Built for scale',
         description: 'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.'
       }]"
-    />
-
-    <UPageSection>
-      <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
-        variant="subtle"
-        :links="[{
-          label: 'Start building',
-          to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-          target: '_blank',
-          trailingIcon: 'i-lucide-arrow-right',
-          color: 'neutral'
-        }, {
-          label: 'View on GitHub',
-          to: 'https://github.com/nuxt-ui-templates/starter',
-          target: '_blank',
-          icon: 'i-simple-icons-github',
-          color: 'neutral',
-          variant: 'outline'
-        }]"
-      />
-    </UPageSection>
+    /> -->
   </div>
 </template>
