@@ -49,27 +49,32 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 const plans = ref([
   {
-    title: 'Free',
-    description: 'Tailored for indie hackers.',
+    title: 'Free Plan',
+    description: '  Perfect for designers and developers getting started.',
     price: '$0',
     features: [
-      'One developer',
-      'Lifetime access'
+      'Extract images and videos from any website',
+      'Download SVGs and icons in original format',
+      'Instant page overview (colors, fonts, typography)',
+      'Manual color picking and copying',
     ],
     button: {
-      label: 'Buy now'
+      label: 'Coming Soon'
     }
   },
   {
-    title: 'Premium',
-    description: 'Best suited for small teams.',
+    title: 'Pro Plan',
+    description: 'For professionals who need production-ready exports',
     price: '$3.99/mo',
     features: [
-      'Up to 5 developers',
-      'Everything in Solo'
+      'Everything in Free, plus:',
+      'AI-powered brand analysis',
+      'Automatic design system generation',
+      'Export to CSS Variables or Tailwind',
+      'WCAG accessibility validation',
     ],
     button: {
-      label: 'Buy now'
+      label: 'Coming Soon'
     }
   },
 ])
@@ -78,8 +83,8 @@ const plans = ref([
 <template>
   <div>
     <UPageHero
-      title="Extract Assets from Any Website in Seconds"
-      description="The ultimate Chrome extension for designers and developers. Capture colors, typography, assets, and generate complete design systems instantly."
+      title="Inspect. Extract. Build Faster."
+      description="Extract images, videos, and SVGs with one click. Hover to inspect any element and instantly reveal colors, typography, and brand identity insights — then export everything in production-ready formats."
       :ui="{
         container: 'bg-[/assets/bg.jpg]',
         root: 'bg-[/assets/bg.jpg]',
@@ -121,24 +126,25 @@ const plans = ref([
     </UPageCTA>
    
     <UPageSection
-      title="Overview"
-      description="Automaticly extracts infomraiton when you ennter a website"
+      title="Instant Page Overview"
+      description="The moment you open a website, MiroMiro analyzes everything: background colors, text colors, font families and color usage frequency. Get a complete snapshot of any site's visual language in seconds."
       orientation="horizontal"
       :ui="{
         container: '!pb-8'
       }"
     >
       <img
-        src="assets/dashboard.png"
+        src="assets/overview.png"
         width="352"
         alt="Illustration"
-        class="w-full rounded-lg"
+        class="w-full border-2 border-neutral-200 rounded-3xl"
       />
     </UPageSection>
 
-    <UPageSection
-      title="Overview"
-      description="Automaticly extracts infomraiton when you ennter a website"
+     <UPageSection
+      title="Smart Element Inspector"
+      description="Hover over any element to see its complete style breakdown. Colors, fonts, spacing, shadows, borders—all displayed in
+  real-time. Copy values instantly or inspect design patterns as you browse."
       orientation="horizontal"
       :ui="{
         container: '!pb-8'
@@ -146,23 +152,60 @@ const plans = ref([
       reverse
     >
       <img
-        src="assets/feature1.png"
+        src="assets/overview.png"
         width="352"
         alt="Illustration"
-        class="w-full rounded-lg"
+        class="w-full border-2 border-neutral-200 rounded-3xl"
+      />
+    </UPageSection>
+
+    <UPageSection
+      title="One-Click Media Extraction"
+      description="Download all images and videos from any website instantly. No more digging for assets—MiroMiro captures every visual asset on the page with a single click. "
+      orientation="horizontal"
+      :ui="{
+        container: '!pb-8'
+      }"
+    >
+      <img
+        src="assets/images1.png"
+        width="352"
+        alt="Illustration"
+        class="w-full border-2 border-neutral-200 rounded-3xl"
       />
     </UPageSection>
 
      <UPageSection
-      title="Overview"
-      description="Automaticly extracts infomraiton when you ennter a website"
+      title="SVG & Icon Capture"
+      description=" Extract SVG graphics and icons in their original vector format. Download them individually or in bulk, preserving full editability. Perfect for designers who need clean, scalable assets without
+  digging through page source."
       orientation="horizontal"
+      reverse
     >
       <img
-        src="assets/dashboard.png"
+        src="assets/svg.png"
         width="352"
         alt="Illustration"
-        class="w-full rounded-lg"
+        class="w-full border-2 border-neutral-200 rounded-3xl"
+      />
+    </UPageSection>
+
+     <UPageSection
+      icon="i-lucide:sparkles"
+      title="AI Design System Generator"
+      description="AI that converts any website into production-ready code.
+It detects hero colors, brand accents, and builds complete color scales with WCAG-validated accessibility.
+Export as CSS variables or Tailwind configs instantly."
+      orientation="horizontal"
+      :ui="{
+        container: '!pb-8'
+      }"
+    >
+      <img
+        src="assets/ai.png"
+        width="352"
+        alt="Illustration"
+        class="w-full border-2 border-neutral-200 rounded-3xl"
       />
     </UPageSection>
 

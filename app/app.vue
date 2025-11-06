@@ -46,21 +46,6 @@ const items = computed<NavigationMenuItem[]>(() => [{
 
       <template #right>
         <UColorModeButton />
-
-        <UButton
-          to="/signin"
-          label="Sign In"
-          aria-label="Sign In"
-          color="neutral"
-          variant="outline"
-        />
-        <UButton
-          to="/signup"
-          label="Sign Up"
-          aria-label="Sign Up"
-          color="neutral"
-          trailing-icon="i-lucide-arrow-right"
-        />
       </template>
 
       <template #body>
