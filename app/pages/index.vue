@@ -72,6 +72,7 @@ const plans = ref([
       'Automatic design system generation',
       'Export to CSS Variables or Tailwind',
       'WCAG accessibility validation',
+      'More coming soon!',
     ],
     button: {
       label: 'Coming Soon'
