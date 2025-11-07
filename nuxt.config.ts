@@ -10,12 +10,12 @@ export default defineNuxtConfig({
   },
   nodemailer: {
     from: '"MiroMiro" <noreply@miromiro.com>',
-    host: process.env.NUXT_NODEMAILER_HOST || 'smtp.mailtrap.io',
-    port: Number(process.env.NUXT_NODEMAILER_PORT) || 465,
-    secure: process.env.NUXT_NODEMAILER_SECURE === 'true',
+    host: process.env.NODEMAILER_HOST || 'smtp.gmail.com',
+    port: Number(process.env.NODEMAILER_PORT) || 465,
+    secure: process.env.NODEMAILER_SECURE === 'true',
     auth: {
-      user: process.env.NUXT_NODEMAILER_USER || '',
-      pass: process.env.NUXT_NODEMAILER_PASS || '',
+      user: process.env.NODEMAILER_USER || '',
+      pass: process.env.NODEMAILER_PASS || '',
     },
   },
   devtools: {
