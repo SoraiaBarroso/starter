@@ -26,12 +26,13 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-const items = computed<NavigationMenuItem[]>(() => [{
-  label: 'Waitlist',
-  to: '#waitlist',
-}, {
+const items = computed<NavigationMenuItem[]>(() => [ {
   label: 'Features',
   to: '#features',
+},
+{
+  label: 'Waitlist',
+  to: '#waitlist',
 },
 {
   label: 'Pricing',
@@ -45,7 +46,22 @@ const items = computed<NavigationMenuItem[]>(() => [{
       <UNavigationMenu :items="items" />
 
       <template #right>
-        <UColorModeButton />
+        <!-- <UColorModeButton /> -->
+         <UButton
+          to="/signin"
+          variant="outline"
+          color="neutral"
+          disabled
+        >
+          Sign In
+        </UButton>
+          <UButton
+          to="/signup"
+          color="neutral"
+          disabled
+        >
+          Sign Up
+        </UButton>
       </template>
 
       <template #body>
@@ -68,10 +84,10 @@ const items = computed<NavigationMenuItem[]>(() => [{
 
       <template #right>
         <UButton
-          to="https://github.com/nuxt-ui-templates/starter"
+          to="https://x.com/SoraiaDev"
           target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
+          icon="i-simple-icons-x"
+          aria-label="Twitter"
           color="neutral"
           variant="ghost"
         />

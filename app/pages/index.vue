@@ -84,11 +84,8 @@ const plans = ref([
   <div>
     <UPageHero
       title="Inspect. Extract. Build Faster."
+      class="relative z-10 py-20"
       description="Extract images, videos, and SVGs with one click. Hover to inspect any element and instantly reveal colors, typography, and brand identity insights — then export everything in production-ready formats."
-      :ui="{
-        container: 'bg-[/assets/bg.jpg]',
-        root: 'bg-[/assets/bg.jpg]',
-      }"
       :links="[{
         label: 'Join the Waitlist',
         to: '#waitlist',
@@ -104,28 +101,13 @@ const plans = ref([
         variant: 'soft',
         class: 'rounded-full'
       }]"
-    />
-    
-    <UPageCTA
-      id="waitlist"
-      title="Be First to Know"
-      description="Join our waitlist and have the chance to get premium features."
-      variant="subtle"
-      :ui="{
-        container: 'flex flex-col items-center justify-center !gap-8',
-      }"
     >
-      <UForm :schema="schema" :state="state" class="space-y-4 w-xs" @submit="onSubmit">
-        <UFormField  name="email" class="w-full">
-          <UInput placeholder="name@mail.com" v-model="state.email" class="w-full" />
-        </UFormField>
-        <UButton type="submit" class="w-full flex justify-center items-center" :disabled="!state.email || isSubmitting" :loading="isSubmitting">
-          Join Waitlist
-        </UButton>
-      </UForm>
-    </UPageCTA>
+      <img src="/assets/bg.svg" class="absolute inset-0 w-full h-full object-cover -z-10" alt="">
+    </UPageHero>
+    
    
     <UPageSection
+      id="features"
       title="Instant Page Overview"
       description="The moment you open a website, MiroMiro analyzes everything: background colors, text colors, font families and color usage frequency. Get a complete snapshot of any site's visual language in seconds."
       orientation="horizontal"
@@ -152,7 +134,7 @@ const plans = ref([
       reverse
     >
       <img
-        src="assets/overview.png"
+        src="assets/inspector.png"
         width="352"
         alt="Illustration"
         class="w-full border-2 border-neutral-200 rounded-3xl"
@@ -197,51 +179,37 @@ const plans = ref([
 It detects hero colors, brand accents, and builds complete color scales with WCAG-validated accessibility.
 Export as CSS variables or Tailwind configs instantly."
       orientation="horizontal"
-      :ui="{
-        container: '!pb-8'
-      }"
+
     >
       <img
-        src="assets/ai.png"
+        src="assets/AI1.png"
         width="352"
         alt="Illustration"
         class="w-full border-2 border-neutral-200 rounded-3xl"
       />
     </UPageSection>
 
-    <UPageSection id="pricing" title="Pricing" description="Choose the plan that fits your needs. Upgrade, downgrade, or cancel anytime with no hidden fees. Simple, transparent pricing for everyone.">
+     <UPageCTA
+      id="waitlist"
+      title="Be the First to Know"
+      description="Sign up for our waitlist and be among the first to enjoy our premium features."
+      variant="subtle"
+      :ui="{
+        container: 'flex flex-col items-center justify-center !gap-8',
+      }"
+    >
+      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+        <UFormField  name="email" class="w-full">
+          <UInput placeholder="name@mail.com" v-model="state.email" class="w-full" />
+        </UFormField>
+        <UButton type="submit" class="w-full flex justify-center items-center" :disabled="!state.email || isSubmitting" :loading="isSubmitting">
+          Join Waitlist
+        </UButton>
+      </UForm>
+    </UPageCTA>
+
+    <UPageSection id="pricing" title="Pricing" description="Find the plan that works best for you. You can upgrade, downgrade, or cancel anytime">
           <UPricingPlans :plans="plans"/>
     </UPageSection>
-
-    <!-- <UPageSection
-      id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
-      :features="[{
-        icon: 'i-lucide-rocket',
-        title: 'Production-ready from day one',
-        description: 'Pre-configured with TypeScript, ESLint, Tailwind CSS, and all the best practices. Focus on building features, not setting up tooling.'
-      }, {
-        icon: 'i-lucide-palette',
-        title: 'Beautiful by default',
-        description: 'Leveraging Nuxt UI\'s design system with automatic dark mode, consistent spacing, and polished components that look great out of the box.'
-      }, {
-        icon: 'i-lucide-zap',
-        title: 'Lightning fast',
-        description: 'Optimized for performance with SSR/SSG support, automatic code splitting, and edge-ready deployment. Your users will love the speed.'
-      }, {
-        icon: 'i-lucide-blocks',
-        title: '100+ components included',
-        description: 'Access Nuxt UI\'s comprehensive component library. From forms to navigation, everything is accessible, responsive, and customizable.'
-      }, {
-        icon: 'i-lucide-code-2',
-        title: 'Developer experience first',
-        description: 'Auto-imports, hot module replacement, and TypeScript support. Write less boilerplate and ship more features.'
-      }, {
-        icon: 'i-lucide-shield-check',
-        title: 'Built for scale',
-        description: 'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.'
-      }]"
-    /> -->
   </div>
 </template>
