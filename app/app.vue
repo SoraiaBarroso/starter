@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { Analytics } from '@vercel/analytics/nuxt'
-const { protocol, host } = useRequestURL()
+
+const config = useRuntimeConfig()
+const baseUrl = config.public.siteUrl
 
 useHead({
   meta: [
@@ -16,9 +18,7 @@ useHead({
 })
 
 const title = 'MiroMiro – Chrome Extension for Designers & Developers';
-const description = 'Inspect elements, extract assets, and generate design systems effortlessly. MiroMiro lets you analyze any website’s visuals, reveal brand identity insights, and export everything in production-ready formats.';
-
-const baseUrl = `${protocol}//${host}`
+const description = 'Inspect elements, extract assets, and generate design systems effortlessly. MiroMiro lets you analyze any website\'s visuals, reveal brand identity insights, and export everything in production-ready formats.';
 
 useSeoMeta({
   title,
@@ -26,8 +26,12 @@ useSeoMeta({
   ogTitle: title,
   ogDescription: description,
   ogImage: `${baseUrl}/images/og-image.png`,
+  ogUrl: baseUrl,
+  twitterCard: 'summary_large_image',
+  twitterTitle: title,
+  twitterDescription: description,
   twitterImage: `${baseUrl}/images/og-image.png`,
-  twitterCard: 'summary_large_image'
+  twitterSite: '@SoraiaDev'
 })
 
 const items = computed<NavigationMenuItem[]>(() => [ {
