@@ -1,7 +1,13 @@
+import { serverSupabaseClient } from '#supabase/server'
+
 export default defineEventHandler(async (event) => {
   try {
+    const client = await serverSupabaseClient(event)
     const body = await readBody(event)
-    const { email } = body
+    const { email: rawEmail } = body
+
+    // Normalize email to lowercase
+    const email = rawEmail?.toLowerCase().trim()
 
     if (!email) {
       throw createError({
@@ -10,6 +16,23 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Check if email already exists
+    const { data: existingEmail } = await client
+      .from('waitlist')
+      .select('email')
+      .eq('email', email)
+      .single()
+
+    if (existingEmail) {
+      throw createError({
+        statusCode: 409,
+        statusMessage: 'You are already on the waitlist!'
+      })
+    }
+
+    const { data } = await client.from('waitlist').insert({email: email}).select().single()
+
+    console.log('Current waitlist entries:', data)
     const { sendMail } = useNodeMailer()
 
     // Send email to the user

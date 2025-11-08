@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+const supabase = useSupabaseClient()
 
 const schema = z.object({
   email: z.string().email('Invalid email')
@@ -17,14 +18,14 @@ const isSubmitting = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   if (isSubmitting.value) return
-
+  
   isSubmitting.value = true
 
   try {
     const response = await $fetch('/api/waitlist', {
       method: 'POST',
       body: {
-        email: event.data.email
+        email: event.data.email.toLowerCase()
       }
     })
 
@@ -37,11 +38,20 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     // Reset the form
     state.email = undefined
   } catch (error: any) {
-    toast.add({
-      title: 'Error',
-      description: error.data?.message || 'Failed to join waitlist. Please try again.',
-      color: 'error'
-    })
+    // Check if it's a duplicate email error (409)
+    if (error.statusCode === 409) {
+      toast.add({
+        title: 'Already Registered',
+        description: error.data?.message || 'You are already on the waitlist!',
+        color: 'warning'
+      })
+    } else {
+      toast.add({
+        title: 'Error',
+        description: error.data?.message || 'Failed to join waitlist. Please try again.',
+        color: 'error'
+      })
+    }
   } finally {
     isSubmitting.value = false
   }
@@ -84,7 +94,7 @@ const plans = ref([
 <template>
   <div>
     <UPageHero
-      title="Inspect. Extract. Build Faster."
+      title="Inspect. Extract. Build Faster – A Chrome Extension"
       class="relative z-10 py-20"
       description="Extract images, videos, and SVGs with one click. Hover to inspect any element and instantly reveal colors, typography, and brand identity insights — then export everything in production-ready formats."
       :links="[{
@@ -199,7 +209,7 @@ Export as CSS variables or Tailwind configs instantly."
         container: 'flex flex-col items-center justify-center !gap-8',
       }"
     >
-      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+      <UForm :schema="schema" :state="state" class="space-y-4 w-xs sm:w-sm md:w-xl lg:w-auto 2xl:w-auto" @submit="onSubmit">
         <UFormField  name="email" class="w-full">
           <UInput placeholder="name@mail.com" v-model="state.email" class="w-full" />
         </UFormField>

@@ -14,7 +14,7 @@ useHead({
   }
 })
 
-const title = 'MiroMiro – The Ultimate UI Inspector Tool';
+const title = 'MiroMiro – Chrome Extension for Designers & Developers';
 const description = 'Inspect elements, extract assets, and generate design systems effortlessly. MiroMiro lets you analyze any website’s visuals, reveal brand identity insights, and export everything in production-ready formats.';
 
 
@@ -82,7 +82,7 @@ const items = computed<NavigationMenuItem[]>(() => [ {
     <UFooter>
       <template #left>
         <p class="text-sm text-muted">
-          Built with Nuxt UI • © {{ new Date().getFullYear() }}
+          Built by Soraia with ❤️ • © {{ new Date().getFullYear() }}
         </p>
       </template>
 
