@@ -1,6 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-nodemailer', '@nuxtjs/supabase'],
+
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.SITE_URL || 'http://localhost:3000'
+    }
+  },
+
   ui: {
     colorMode: false,
   },

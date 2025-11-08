@@ -94,9 +94,9 @@ const plans = ref([
 <template>
   <div>
     <UPageHero
-      title="Inspect. Extract. Build Faster – A Chrome Extension"
+      title="Inspect. Extract. Build Faster."
       class="relative z-10 py-20"
-      description="Extract images, videos, and SVGs with one click. Hover to inspect any element and instantly reveal colors, typography, and brand identity insights — then export everything in production-ready formats."
+      description="The ultimate Chrome extension for one-click asset extraction. Hover to inspect colors, fonts, and spacing—then export images, videos, and SVGs production-ready."
       :links="[{
         label: 'Join the Waitlist',
         to: '#waitlist',
@@ -193,7 +193,7 @@ Export as CSS variables or Tailwind configs instantly."
 
     >
       <img
-        src="assets/AI1.png"
+        src="assets/AI.png"
         width="352"
         alt="Illustration"
         class="w-full border-2 border-neutral-200 rounded-3xl"
