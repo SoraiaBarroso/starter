@@ -10,7 +10,7 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ],
   link: [
-    { rel: 'icon', href: '/favicon.ico' }
+    { rel: 'icon', href: '/icon.svg' }
   ],
   htmlAttrs: {
     lang: 'en'
@@ -83,7 +83,7 @@ const items = computed<NavigationMenuItem[]>(() => [ {
       <NuxtPage />
     </UMain>
 
-    <USeparator icon="i-simple-icons-nuxtdotjs" />
+    <USeparator icon="i-typcn:heart-outline" :ui="{icon: 'text-purple-400'}" />
 
     <UFooter>
       <template #left>

@@ -69,7 +69,7 @@ const plans = ref([
       'Manual color picking and copying',
     ],
     button: {
-      label: 'Coming Soon'
+      label: 'Coming Soon...'
     }
   },
   {
@@ -85,7 +85,7 @@ const plans = ref([
       'More coming soon!',
     ],
     button: {
-      label: 'Coming Soon'
+      label: 'Coming Soon...'
     }
   },
 ])
@@ -103,7 +103,7 @@ const plans = ref([
         trailingIcon: 'i-lucide-arrow-right',
         size: 'xl',
         variant: 'soft',
-        class: 'rounded-full'
+        class: 'rounded-full bg-purple-100 text-purple-500 hover:bg-purple-200'
       }, {
         label: 'See how It Works',
         to: '#features',
@@ -190,6 +190,9 @@ const plans = ref([
 It detects hero colors, brand accents, and builds complete color scales with WCAG-validated accessibility.
 Export as CSS variables or Tailwind configs instantly."
       orientation="horizontal"
+      :ui="{
+        leadingIcon: 'text-[#B6A5CC]'
+      }"
 
     >
       <img
@@ -213,14 +216,21 @@ Export as CSS variables or Tailwind configs instantly."
         <UFormField  name="email" class="w-full">
           <UInput placeholder="name@mail.com" v-model="state.email" class="w-full" />
         </UFormField>
-        <UButton type="submit" class="w-full flex justify-center items-center" :disabled="!state.email || isSubmitting" :loading="isSubmitting">
+        <UButton type="submit" class="w-full flex justify-center items-center cursor-pointer focus:bg-purple-600! disabled:bg-purple-200! bg-purple-400 hover:bg-purple-500" :disabled="!state.email || isSubmitting" :loading="isSubmitting">
           Join Waitlist
         </UButton>
       </UForm>
     </UPageCTA>
 
     <UPageSection id="pricing" title="Pricing" description="Find the plan that works best for you. You can upgrade, downgrade, or cancel anytime">
-          <UPricingPlans :plans="plans"/>
+          <UPricingPlans>
+             <UPricingPlan
+                v-for="(plan, index) in plans"
+                :key="index"
+                v-bind="plan"
+                :ui="{button: 'bg-purple-400 hover:bg-purple-500 disabled:bg-purple-200! focus:bg-purple-600!', featureIcon: '!bg-purple-300'}"
+              />
+          </UPricingPlans>
     </UPageSection>
   </div>
 </template>
