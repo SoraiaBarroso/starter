@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-const supabase = useSupabaseClient()
 
 const schema = z.object({
   email: z.string().email('Invalid email')
@@ -60,29 +59,50 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 const plans = ref([
   {
     title: 'Free Plan',
-    description: '  Perfect for designers and developers getting started.',
+    description: 'Perfect for trying MiroMiro and occasional use',
     price: '$0',
+    billingCycle: "/month",
     features: [
-      'Extract images and videos from any website',
-      'Download SVGs and icons in original format',
-      'Instant page overview (colors, fonts, typography)',
-      'Manual color picking and copying',
+      'Page Overview',
+      'Inspect Mode',
+      'Individual Downloads',
+      'Color Palette Viewer',
+      '50 asset extractions/month',
     ],
     button: {
       label: 'Coming Soon...'
     }
   },
   {
-    title: 'Pro Plan',
-    description: 'For professionals who need production-ready exports',
-    price: '$3.99/mo',
+    title: 'Starter',
+    description: 'Best for: Freelancers working on 5-10 projects/month',
+    price: '$15',
+    discount: '$9',
+    billingCycle: "/month",
+    scale: true,
+    badge: 'Launch Price',
     features: [
-      'Everything in Free, plus:',
-      'AI-powered brand analysis',
-      'Automatic design system generation',
-      'Export to CSS Variables or Tailwind',
-      'WCAG accessibility validation',
-      'More coming soon!',
+      'Everything in Free Plan, plus:',
+      '500 asset extractions/month',
+      'Bulk Export',
+      '20 Lottie Animation Extractions/month',
+      '50 AI Design System Generations/month',
+    ],
+    button: {
+      label: 'Coming Soon...'
+    }
+  },
+    {
+    title: 'Pro',
+    description: 'Best for: Agencies, product teams, and daily users',
+    price: '$24',
+    billingCycle: "/month",
+     features: [
+      'Everything in Starter Plan, plus:',
+      '2,000 asset extractions/month',
+      'Unlimited Lottie extractions',
+      'Unlimited AI Design System generations',
+      'Priority support'
     ],
     button: {
       label: 'Coming Soon...'
@@ -114,6 +134,10 @@ const plans = ref([
       }]"
     >
       <img src="/assets/bg.svg" class="absolute inset-0 w-full h-full object-cover -z-10" alt="">
+      <!-- <img src="/assets/ex1.png" alt="" class="absolute w-100 hover:scale-110 transition duration-200 ease-in-out right-10 top-1/4 -translate-y-1/2 ">
+      <img src="/assets/ex2.png" alt="" class="absolute w-80 hover:scale-110 transition duration-200 ease-in-out left-10 bottom-10 ">
+      <img src="/assets/ex4.png" alt="" class="absolute w-80 hover:scale-110 transition duration-200 ease-in-out left-0 top-10 "> -->
+
     </UPageHero>
     
    
@@ -123,14 +147,15 @@ const plans = ref([
       description="The moment you open a website, MiroMiro analyzes everything: background colors, text colors, font families and color usage frequency. Get a complete snapshot of any site's visual language in seconds."
       orientation="horizontal"
       :ui="{
-        container: '!pb-8'
+        container: '!pb-8',
+        description: 'leading-8',
       }"
     >
       <img
         src="assets/overview.png"
         width="352"
         alt="Illustration"
-        class="w-full border-2 border-neutral-200 rounded-3xl"
+        class="w-120 border-2 border-neutral-200 bg-[#fefcf4] h-100 object-contain rounded-3xl"
       />
     </UPageSection>
 
@@ -140,7 +165,8 @@ const plans = ref([
   real-time. Copy values instantly or inspect design patterns as you browse."
       orientation="horizontal"
       :ui="{
-        container: '!pb-8'
+        container: '!pb-8',
+        description: 'leading-8',
       }"
       reverse
     >
@@ -148,7 +174,7 @@ const plans = ref([
         src="assets/inspector.png"
         width="352"
         alt="Illustration"
-        class="w-full border-2 border-neutral-200 rounded-3xl"
+        class="w-120 border-2 border-neutral-200 bg-[#fefcf4] h-100 object-contain rounded-3xl"
       />
     </UPageSection>
 
@@ -157,14 +183,15 @@ const plans = ref([
       description="Download all images and videos from any website instantly. No more digging for assets—MiroMiro captures every visual asset on the page with a single click. "
       orientation="horizontal"
       :ui="{
-        container: '!pb-8'
+        container: '!pb-8', 
+        description: 'leading-8',
       }"
     >
       <img
         src="assets/images1.png"
         width="352"
         alt="Illustration"
-        class="w-full border-2 border-neutral-200 rounded-3xl"
+        class="w-120 border-2 border-neutral-200 bg-[#fefcf4] h-100 object-contain rounded-3xl"
       />
     </UPageSection>
 
@@ -174,12 +201,31 @@ const plans = ref([
   digging through page source."
       orientation="horizontal"
       reverse
+      :ui="{
+        description: 'leading-8',
+      }"
     >
       <img
         src="assets/svg.png"
-        width="352"
         alt="Illustration"
-        class="w-full border-2 border-neutral-200 rounded-3xl"
+        class="w-120 border-2 border-neutral-200 bg-[#fefcf4] h-100 object-contain rounded-3xl"        
+      />
+    </UPageSection>
+
+    <UPageSection
+      headline="New"
+      title="Lottie Animation Export"
+      description="Capture and export Lottie animations directly from websites. MiroMiro identifies embedded Lottie files and lets you download them in JSON format, ready for use in your projects."
+      orientation="horizontal"
+      :ui="{
+        description: 'leading-8',
+        headline: 'bg-purple-100 border border-purple-300 text-purple-600 inline-block px-3 py-0.5 rounded-full mb-4',
+      }"
+    >
+      <img
+        src="assets/test.gif"
+        alt="Illustration"
+        class="w-120 border-2 border-neutral-200 p-6 h-100 object-contain rounded-3xl"
       />
     </UPageSection>
 
@@ -191,15 +237,16 @@ It detects hero colors, brand accents, and builds complete color scales with WCA
 Export as CSS variables or Tailwind configs instantly."
       orientation="horizontal"
       :ui="{
-        leadingIcon: 'text-[#B6A5CC]'
+        leadingIcon: 'text-[#B6A5CC]',
+        description: 'leading-8',
       }"
-
+      reverse
     >
       <img
         src="assets/AI.png"
         width="352"
         alt="Illustration"
-        class="w-full border-2 border-neutral-200 rounded-3xl"
+        class="w-120 border-2 border-neutral-200 bg-[#fefcf4] h-100 object-contain rounded-3xl"
       />
     </UPageSection>
 
@@ -222,7 +269,7 @@ Export as CSS variables or Tailwind configs instantly."
       </UForm>
     </UPageCTA>
 
-    <UPageSection id="pricing" title="Pricing" description="Find the plan that works best for you. You can upgrade, downgrade, or cancel anytime">
+    <UPageSection id="pricing" title="Pricing" description="Try it for free and upgrade to unlock advanced features that will boost your efficiency.">
           <UPricingPlans>
              <UPricingPlan
                 v-for="(plan, index) in plans"

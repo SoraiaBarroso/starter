@@ -1,16 +1,69 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { Analytics } from '@vercel/analytics/nuxt'
+import type { DropdownMenuItem } from '@nuxt/ui'
 
+definePageMeta({
+})
+
+const user = useSupabaseUser()
+const supabase = useSupabaseClient()
+const toast = useToast()
 const config = useRuntimeConfig()
 const baseUrl = config.public.siteUrl
+
+// Use shared avatar state
+const { avatarUrl, updateAvatar } = useUserAvatar()
+
+onMounted(async () => {
+  if (!user.value?.sub) return
+  
+  const { data } = await supabase
+      .from('user_profiles')
+      .select('avatar_url')
+      .eq('id', user.value?.sub)
+      .single()
+
+  if (data?.avatar_url) {
+    updateAvatar(data.avatar_url)
+  }
+})
+
+const imgUser = computed(() => {
+  return avatarUrl.value
+})
+
+const itemsDropdown = ref<DropdownMenuItem[]>([
+  {
+    label: 'Profile',
+    icon: 'i-lucide-user',
+    onSelect: () => {
+      // Navigate to profile page
+      navigateTo('/profile')
+    }
+  },
+  {
+    label: 'Sign Out',
+    icon: 'i-lucide-cog',
+    onSelect: async () => {
+      const supabase = useSupabaseClient()
+      await supabase.auth.signOut()
+      toast.add({
+        title: 'Signed Out',
+        description: 'You have been signed out successfully.',
+        color: 'success'
+      })
+      navigateTo('/')
+    }
+  }
+])
 
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ],
   link: [
-    { rel: 'icon', href: '/icon.svg' }
+    { rel: 'icon', href: '/logo.png' }
   ],
   htmlAttrs: {
     lang: 'en'
@@ -25,12 +78,12 @@ useSeoMeta({
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: `${baseUrl}/images/og-image.png`,
+  ogImage: `${baseUrl}/og-image.png`,
   ogUrl: baseUrl,
   twitterCard: 'summary_large_image',
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: `${baseUrl}/images/og-image.png`,
+  twitterImage: `${baseUrl}/og-image.png`,
   twitterSite: '@SoraiaDev'
 })
 
@@ -61,6 +114,7 @@ const items = computed<NavigationMenuItem[]>(() => [ {
           to="/signin"
           variant="outline"
           color="neutral"
+          v-if="!user"
           disabled
         >
           Sign In
@@ -68,10 +122,15 @@ const items = computed<NavigationMenuItem[]>(() => [ {
           <UButton
           to="/signup"
           color="neutral"
+          v-if="!user"
           disabled
         >
           Sign Up
         </UButton>
+        
+        <UDropdownMenu :items="itemsDropdown" v-if="user" class="cursor-pointer">
+          <UAvatar :src="imgUser" class="ml-2"/>
+        </UDropdownMenu>
       </template>
 
       <template #body>

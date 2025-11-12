@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pnpm list:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(npx supabase:*)"
     ],
     "deny": [],
     "ask": []

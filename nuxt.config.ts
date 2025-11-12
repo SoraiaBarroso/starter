@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-nodemailer', '@nuxtjs/supabase'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-nodemailer', '@nuxtjs/supabase', '@nuxt/image'],
 
   runtimeConfig: {
     public: {
@@ -15,11 +15,11 @@ export default defineNuxtConfig({
     types: false,
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
+    serviceKey: process.env.SUPABASE_SECRET_KEY,
     redirectOptions: {
-      login: "/", // User will be redirected to this path if not authenticated or after logout.
-      callback: "/", // This is the path the user will be redirect to after supabase login redirection.
-      include: undefined, // Routes to include in the redirect. ['/admin(/*)?'] will enable the redirect only for the admin page and all sub-pages.
-      exclude: ["/"],
+      login: "/signup", // User will be redirected to this path if not authenticated or after logout.
+      callback: "/confirm", // This is the path the user will be redirect to after supabase login redirection.
+      exclude: ["/signin", "/"], // These paths won't be protected and require no authentication.
       cookieRedirect: false,
     },
   },
