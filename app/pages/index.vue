@@ -250,15 +250,17 @@ Export as CSS variables or Tailwind configs instantly."
       />
     </UPageSection>
 
-     <UPageCTA
+    <UPageCTA
       id="waitlist"
       title="Be the First to Know"
       description="Sign up for our waitlist and be among the first to enjoy our premium features."
       variant="subtle"
       :ui="{
+        title: 'relative',  
         container: 'flex flex-col items-center justify-center !gap-8',
       }"
     >
+      <span class="absolute top-10 left-[50%] translate-x-[-50%] text-center bg-purple-100 text-purple-600 border border-purple-300 rounded-full px-3 py-0.5">Sign up and get 20% off in paid plans!</span>
       <UForm :schema="schema" :state="state" class="space-y-4 w-xs sm:w-sm md:w-xl lg:w-auto 2xl:w-auto" @submit="onSubmit">
         <UFormField  name="email" class="w-full">
           <UInput placeholder="name@mail.com" v-model="state.email" class="w-full" />
